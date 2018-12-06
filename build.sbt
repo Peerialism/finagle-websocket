@@ -11,8 +11,7 @@ val baseSettings = Seq(
 lazy val buildSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "com.github.finagle",
   version := libVersion,
-  scalaVersion := "2.11.8",
-  crossScalaVersions := Seq("2.10.5", "2.11.8"),
+  scalaVersion := "2.12.7",
   scalacOptions ++= Seq("-deprecation", "-feature"),
   scoverage.ScoverageKeys.coverageHighlighting := (
     CrossVersion.partialVersion(scalaVersion.value) match {
