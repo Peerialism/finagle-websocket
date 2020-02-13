@@ -1,12 +1,15 @@
 package com.twitter.finagle.websocket
 
-import com.twitter.conversions.time._
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.FunSuite
-import org.junit.runner.RunWith
+import java.util.concurrent.{CountDownLatch, TimeUnit}
+
 import com.twitter.concurrent.Broker
+import com.twitter.conversions.DurationOps._
 import com.twitter.finagle.{HttpWebSocket, Service}
 import com.twitter.util._
+import org.junit.runner.RunWith
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+
 import scala.collection.mutable.ArrayBuffer
 
 @RunWith(classOf[JUnitRunner])
@@ -49,7 +52,7 @@ class EndToEndTest extends FunSuite {
       FuturePool.unboundedPool { binaryBrocker !! Array[Byte](0x01) }
     }
 
-    latch.within(1.second)
+    latch.await(1, TimeUnit.SECONDS)
     assert(result === "11111")
     assert(binaryResult === ArrayBuffer(0x01, 0x01, 0x01, 0x01, 0x01))
   }
